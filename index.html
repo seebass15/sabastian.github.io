@@ -228,6 +228,79 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbzXfetTWxQQPM8K6nkQ5-I3T8WH7Gp7KoI3KzR3rlwTD8ZJz5xa47YAq8cuZLKIw6BM/exec";
 
+
+function todayISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function buildPayload(card) {
+  const date = todayISO();
+  const exercise = (card.dataset.exercise || "").trim();
+
+  return {
+    "RowKey": `${date}|${exercise}`,      // must match your sheet RowKey exactly
+    "Date": date,
+    "Day": card.dataset.day || "",
+    "Workout Focus": card.dataset.focus || "",
+    "Exercise": exercise,
+
+    "Target Rep Min": card.dataset.repmin || "",
+    "Target Rep Max": card.dataset.repmax || "",
+
+    // Warm-ups: your current HTML has inputs but no place to store text like "30x8"
+    // We'll store "WU weight x reps" as text in these fields (minimal change).
+    "Warm-up 1 (text)": warmupText(card, 1),
+    "Warm-up 2 (text)": warmupText(card, 2),
+
+    // Sets 1-4 (blank if not filled)
+    "Set 1 Wt": setVal(card, 0, "w"),
+    "Set 1 Reps": setVal(card, 0, "r"),
+    "Set 2 Wt": setVal(card, 1, "w"),
+    "Set 2 Reps": setVal(card, 1, "r"),
+    "Set 3 Wt": setVal(card, 2, "w"),
+    "Set 3 Reps": setVal(card, 2, "r"),
+    "Set 4 Wt": setVal(card, 3, "w"),
+    "Set 4 Reps": setVal(card, 3, "r"),
+  };
+}
+
+function setVal(card, idx, which) {
+  const weights = Array.from(card.querySelectorAll(".setWeight"));
+  const reps    = Array.from(card.querySelectorAll(".setReps"));
+  const w = (weights[idx]?.value || "").trim();
+  const r = (reps[idx]?.value || "").trim();
+  return which === "w" ? w : r;
+}
+
+// Minimal warmup mapping using the two warmup inputs you already have.
+// If you later want multiple warmup rows, we can extend this cleanly.
+function warmupText(card, n) {
+  const w = (card.querySelector(".wuWeight")?.value || "").trim();
+  const r = (card.querySelector(".wuReps")?.value || "").trim();
+  if (!w && !r) return "";
+  // Put into warm-up 1 and leave warm-up 2 blank (minimal)
+  return n === 1 ? `${w}x${r}` : "";
+}
+
+async function saveExerciseToSheet(payload) {
+  const res = await fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const text = await res.text();
+    throw new Error(text);
+  }
+  return res.json();
+}
+
+
 async function loadWorkouts() {
   const res = await fetch(API_URL);
   const data = await res.json();
@@ -275,22 +348,43 @@ document.addEventListener("click", e => {
 
   /* Save + Next */
   if (e.target.matches(".saveExercise")) {
-    const card = e.target.closest(".exercise");
+    const btn = e.target;
+    const card = btn.closest(".exercise");
     const max = Number(card.dataset.maxSets || 4);
+  
+    // count completed sets (works even if maxSets differs)
     const weights = [...card.querySelectorAll(".setWeight")];
     const reps    = [...card.querySelectorAll(".setReps")];
-
-    const sets = [];
-    for (let i = 0; i < max; i++) {
-      if (weights[i]?.value && reps[i]?.value) {
-        sets.push({ w: weights[i].value, r: reps[i].value });
-      }
+  
+    let count = 0;
+    for (let i = 0; i < Math.min(max, weights.length, reps.length); i++) {
+      if (weights[i]?.value && reps[i]?.value) count++;
     }
-
-    getState(card).sets = sets;
-    card.querySelector(".status").textContent = `${sets.length} / ${max}`;
-
-    goNext(card);
+  
+    // update local UI
+    card.querySelector(".status").textContent = `${count} / ${max}`;
+  
+    // build and POST payload to Google Sheets
+    try {
+      btn.disabled = true;
+      btn.textContent = "Saving...";
+  
+      const payload = buildPayload(card);
+      await saveExerciseToSheet(payload);
+  
+      btn.textContent = "Saved ✓ Next →";
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = "Save & Next →";
+        goNext(card);
+      }, 200);
+  
+    } catch (err) {
+      console.error("Save failed:", err);
+      btn.disabled = false;
+      btn.textContent = "Save & Next →";
+      alert("Save failed. Open DevTools Console for details.");
+    }
   }
 });
 
