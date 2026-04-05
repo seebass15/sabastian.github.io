@@ -131,6 +131,41 @@
   </div>
 
   <!-- Exercise 2 -->
+  <div class="exercise"
+     data-day="Monday"
+     data-focus="Chest + Shoulders"
+     data-exercise="Pull-ups"
+     data-repmin="6"
+     data-repmax="10"
+     data-max-sets="3">
+
+    <div class="exercise-header">
+      <div>
+        <b>Pull‑ups</b>
+        <div class="meta">3 × 6–10</div>
+      </div>
+      <div class="status">0 / 3</div>
+    </div>
+    <div class="exercise-body hidden">
+      <!-- warm up -->
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <!-- <div class="set-row"> -->
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+  <!-- Exercise 2 -->
   <div class="exercise" data-max-sets="4">
     <div class="exercise-header">
       <div>
@@ -158,10 +193,48 @@
       <button class="saveExercise">Save & Next →</button>
     </div>
   </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise" data-max-sets="4">
+    <div class="exercise-header">
+      <div>
+        <b>Rows</b>
+        <div class="meta">4 × 6–10</div>
+      </div>
+      <div class="status">0 / 4</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      <!-- warm up -->
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <!-- <div class="set-row"> -->
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
 </div>
 </section>
 
 <script>
+const API_URL = "https://script.google.com/macros/s/AKfycbzXfetTWxQQPM8K6nkQ5-I3T8WH7Gp7KoI3KzR3rlwTD8ZJz5xa47YAq8cuZLKIw6BM/exec";
+
+async function loadWorkouts() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+  console.log("Previous workouts:", data);
+}
+
+
 const state = new WeakMap();
 
 /* Helpers */
@@ -220,5 +293,17 @@ document.addEventListener("click", e => {
     goNext(card);
   }
 });
+
+function updateTicker(card) {
+  const max = Number(card.dataset.maxSets || 4);
+  const weights = Array.from(card.querySelectorAll(".setWeight"));
+  const reps = Array.from(card.querySelectorAll(".setReps"));
+
+  let count = 0;
+  for (let i = 0; i < Math.min(max, weights.length, reps.length); i++) {
+    if (weights[i].value.trim() && reps[i].value.trim()) count++;
+  }
+  card.querySelector(".status").textContent = `${count} / ${max}`;
+}
 </script>
 </body></html>
