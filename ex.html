@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workout Log</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      background: #0b1020;
+      color: #eaf0ff;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 16px 0 8px;
+    }
+
+    .exercise {
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    .status {
+      font-weight: 600;
+    }
+
+    .exercise-body {
+      margin-top: 12px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .set-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      border: none;
+      background: #7c5cff;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .warmup {
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Monday</h1>
+
+<section class="day">
+
+  <!-- Exercise 1 -->
+  <div class="exercise" data-max-sets="4">
+    <div class="exercise-header">
+      <div>
+        <b>Bench Press</b>
+        <div class="meta">4 × 6–8</div>
+      </div>
+      <div class="status">0 / 4</div>
+    </div>
+
+    <div class="exercise-body hidden">
+
+      <div class="warmup">
+        <b>Warm‑ups (optional)</b>
+        <div class="set-row">
+          <input class="wuWeight" placeholder="WU weight">
+          <input class="wuReps" placeholder="WU reps">
+        </div>
+      </div>
+
+      <b>Working Sets</b>
+
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 1 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 2 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 3 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 4 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise" data-max-sets="4">
+    <div class="exercise-header">
+      <div>
+        <b>Pull‑ups</b>
+        <div class="meta">4 × 6–10</div>
+      </div>
+      <div class="status">0 / 4</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      <!-- warm up -->
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Assisted / BW">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <!-- <div class="set-row"> -->
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+</div>
+</section>
+
+<script>
+const state = new WeakMap();
+
+/* Helpers */
+function getState(card) {
+  if (!state.has(card)) {
+    state.set(card, { sets: [] });
+  }
+  return state.get(card);
+}
+
+function closeAllExercises() {
+  document.querySelectorAll(".exercise-body").forEach(b => b.classList.add("hidden"));
+}
+
+function openExercise(card) {
+  closeAllExercises();
+  card.querySelector(".exercise-body").classList.remove("hidden");
+}
+
+function goNext(card) {
+  card.querySelector(".exercise-body").classList.add("hidden");
+  const next = card.nextElementSibling;
+  if (next && next.classList.contains("exercise")) {
+    openExercise(next);
+    next.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+/* Event delegation */
+document.addEventListener("click", e => {
+
+  /* Expand / collapse */
+  const header = e.target.closest(".exercise-header");
+  if (header) {
+    openExercise(header.closest(".exercise"));
+    return;
+  }
+
+  /* Save + Next */
+  if (e.target.matches(".saveExercise")) {
+    const card = e.target.closest(".exercise");
+    const max = Number(card.dataset.maxSets || 4);
+    const weights = [...card.querySelectorAll(".setWeight")];
+    const reps    = [...card.querySelectorAll(".setReps")];
+
+    const sets = [];
+    for (let i = 0; i < max; i++) {
+      if (weights[i]?.value && reps[i]?.value) {
+        sets.push({ w: weights[i].value, r: reps[i].value });
+      }
+    }
+
+    getState(card).sets = sets;
+    card.querySelector(".status").textContent = `${sets.length} / ${max}`;
+
+    goNext(card);
+  }
+});
+</script>
+</body></html>
