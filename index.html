@@ -337,7 +337,7 @@ function goNext(card) {
 }
 
 /* Event delegation */
-document.addEventListener("click", e => {
+document.addEventListener("click", async(e) => {
 
   /* Expand / collapse */
   const header = e.target.closest(".exercise-header");
