@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Workout Log</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 16px;
+      background: #0b1020;
+      color: #eaf0ff;
+      font-family: system-ui, sans-serif;
+    }
+
+    h1 {
+      margin: 16px 0 8px;
+    }
+
+    .exercise {
+      background: rgba(255,255,255,0.06);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .exercise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .meta {
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    .status {
+      font-weight: 600;
+    }
+
+    .exercise-body {
+      margin-top: 12px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .set-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    input {
+      flex: 1;
+      padding: 8px;
+      border-radius: 10px;
+      border: none;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 12px;
+      border: none;
+      background: #7c5cff;
+      color: #fff;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .warmup {
+      opacity: 0.6;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>Tuesday</h1>
+
+<section class="day">
+
+  <!-- Exercise 1 -->
+  <div class="exercise"
+     data-day="Friday"
+     data-focus="Back + Shoulders"
+     data-exercise="Deadlift / Romanian Deadlift"
+     data-repmin="6"
+     data-max-sets="4">
+
+    <div class="exercise-header">
+      <div>
+        <b>Deadlift / Romanian Deadlift</b>
+        <div class="meta">4 x 6</div>
+      </div>
+      <div class="status">0 / 4</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      
+      <!-- warm up -->
+      <div class="warmup">
+        <b>Warm‑ups (optional)</b>
+        <div class="set-row">
+          <input class="wuWeight" placeholder="WU weight">
+          <input class="wuReps" placeholder="reps">
+        </div>
+      </div>
+
+      <b>Working Sets</b>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 1 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 2 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class ='set-row'>
+        <input class = 'setWeight' placeholder = 'Set 3 weight'>
+        <input class = 'setReps' placeholder = 'reps'>
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 4 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise"
+     data-day="Friday"
+     data-focus="Back + Shoulders"
+     data-exercise="Pull-ups"
+     data-repmin="6"
+     data-repmax="10"
+     data-max-sets="4">
+
+    <div class="exercise-header">
+      <div>
+        <b>Pull-ups</b>
+        <div class="meta">4 x 6-10</div>
+      </div>
+      <div class="status">0 / 4</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      
+      <!-- warm up -->
+      <div class="warmup">
+        <b>Warm‑ups (optional)</b>
+        <div class="set-row">
+          <input class="wuWeight" placeholder="WU weight">
+          <input class="wuReps" placeholder="reps">
+        </div>
+      </div>
+
+      <b>Working Sets</b>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 1 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 2 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class ='set-row'>
+        <input class = 'setWeight' placeholder = 'Set 3 weight'>
+        <input class = 'setReps' placeholder = 'reps'>
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 4 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise"
+     data-day="Friday"
+     data-focus="Back + Shoulders"
+     data-exercise="Seated DB Shoulder Press"
+     data-repmin="8"
+     data-repmax="10"
+     data-max-sets="3">
+
+    <div class="exercise-header">
+      <div>
+        <b>Seated DB Shoulder Press</b>
+        <div class="meta">3 x 8-10</div>
+      </div>
+      <div class="status">0 / 3</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      
+      <!-- warm up -->
+      <div class="warmup">
+        <b>Warm‑ups (optional)</b>
+        <div class="set-row">
+          <input class="wuWeight" placeholder="WU weight">
+          <input class="wuReps" placeholder="reps">
+        </div>
+      </div>
+
+      <b>Working Sets</b>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 1 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 2 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class ='set-row'>
+        <input class = 'setWeight' placeholder = 'Set 3 weight'>
+        <input class = 'setReps' placeholder = 'reps'>
+      </div>
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise"
+     data-day="Friday"
+     data-focus="Back + Shoulders"
+     data-exercise="Rear Delt Fly"
+     data-repmin="12"
+     data-repmax="15"
+     data-max-sets="3">
+
+    <div class="exercise-header">
+      <div>
+        <b>Read Delt Fly</b>
+        <div class="meta">3 x 12-15</div>
+      </div>
+      <div class="status">0 / 3</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      
+      <!-- warm up -->
+      <div class="warmup">
+        <b>Warm‑ups (optional)</b>
+        <div class="set-row">
+          <input class="wuWeight" placeholder="WU weight">
+          <input class="wuReps" placeholder="reps">
+        </div>
+      </div>
+
+      <b>Working Sets</b>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 1 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 2 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class ='set-row'>
+        <input class = 'setWeight' placeholder = 'Set 3 weight'>
+        <input class = 'setReps' placeholder = 'reps'>
+      </div>
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise"
+     data-day="Friday"
+     data-focus="Back + Shoulders"
+     data-exercise="Lateral Raise Drop Set"
+     data-max-sets="3">
+
+    <div class="exercise-header">
+      <div>
+        <b>Lateral Raise Drop Set</b>
+        <div class="meta">3 rounds</div>
+      </div>
+      <div class="status">0 / 3</div>
+    </div>
+
+    <div class="exercise-body hidden">
+      
+      <!-- warm up -->
+      <div class="warmup">
+        <b>Warm‑ups (optional)</b>
+        <div class="set-row">
+          <input class="wuWeight" placeholder="WU weight">
+          <input class="wuReps" placeholder="reps">
+        </div>
+      </div>
+
+      <b>Working Sets</b>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 1 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class="set-row">
+        <input class="setWeight" placeholder="Set 2 weight">
+        <input class="setReps" placeholder="reps">
+      </div>
+      <div class ='set-row'>
+        <input class = 'setWeight' placeholder = 'Set 3 weight'>
+        <input class = 'setReps' placeholder = 'reps'>
+      </div>
+      <button class="saveExercise">Save & Next →</button>
+    </div>
+  </div>
+
+
+
+</div>
+</section>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbx4Jh4owm7AQqxiR-APZdgDnFWe24t7MES9HBSGU__K2wXvfpAGV-j37ivSn53kQMY_/exec";
+
+
+function todayISO() {
+  const d = new Date();
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
+}
+
+function buildPayload(card) {
+  const date = todayISO();
+  const exercise = (card.dataset.exercise || "").trim();
+
+  return {
+    "RowKey": `${date}|${exercise}`,      // must match your sheet RowKey exactly
+    "Date": date,
+    "Day": card.dataset.day || "",
+    "Workout Focus": card.dataset.focus || "",
+    "Exercise": exercise,
+
+    "Target Rep Min": card.dataset.repmin || "",
+    "Target Rep Max": card.dataset.repmax || "",
+
+    // Warm-ups: your current HTML has inputs but no place to store text like "30x8"
+    // We'll store "WU weight x reps" as text in these fields (minimal change).
+    "Warm-up 1 (text)": warmupText(card, 1),
+    "Warm-up 2 (text)": warmupText(card, 2),
+
+    // Sets 1-4 (blank if not filled)
+    "Set 1 Wt": setVal(card, 0, "w"),
+    "Set 1 Reps": setVal(card, 0, "r"),
+    "Set 2 Wt": setVal(card, 1, "w"),
+    "Set 2 Reps": setVal(card, 1, "r"),
+    "Set 3 Wt": setVal(card, 2, "w"),
+    "Set 3 Reps": setVal(card, 2, "r"),
+    "Set 4 Wt": setVal(card, 3, "w"),
+    "Set 4 Reps": setVal(card, 3, "r"),
+  };
+}
+
+function setVal(card, idx, which) {
+  const weights = Array.from(card.querySelectorAll(".setWeight"));
+  const reps    = Array.from(card.querySelectorAll(".setReps"));
+  const w = (weights[idx]?.value || "").trim();
+  const r = (reps[idx]?.value || "").trim();
+  return which === "w" ? w : r;
+}
+
+// Minimal warmup mapping using the two warmup inputs you already have.
+// If you later want multiple warmup rows, we can extend this cleanly.
+function warmupText(card, n) {
+  const w = (card.querySelector(".wuWeight")?.value || "").trim();
+  const r = (card.querySelector(".wuReps")?.value || "").trim();
+  if (!w && !r) return "";
+  // Put into warm-up 1 and leave warm-up 2 blank (minimal)
+  return n === 1 ? `${w}x${r}` : "";
+}
+
+async function saveExerciseToSheet(payload) {
+  const res = await fetch(API_URL, {
+    method: "POST",mode: "no-cors",
+    headers: { "Content-Type": "text/plain;charset=utf-8" },
+    body: JSON.stringify(payload),
+  });
+  return res;
+}
+
+
+async function loadWorkouts() {
+  const res = await fetch(API_URL);
+  const data = await res.json();
+  console.log("Previous workouts:", data);
+}
+
+
+const state = new WeakMap();
+
+/* Helpers */
+function getState(card) {
+  if (!state.has(card)) {
+    state.set(card, { sets: [] });
+  }
+  return state.get(card);
+}
+
+function closeAllExercises() {
+  document.querySelectorAll(".exercise-body").forEach(b => b.classList.add("hidden"));
+}
+
+function openExercise(card) {
+  closeAllExercises();
+  card.querySelector(".exercise-body").classList.remove("hidden");
+}
+
+function goNext(card) {
+  card.querySelector(".exercise-body").classList.add("hidden");
+  const next = card.nextElementSibling;
+  if (next && next.classList.contains("exercise")) {
+    openExercise(next);
+    next.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+/* Event delegation */
+document.addEventListener("click", async(e) => {
+
+  /* Expand / collapse */
+  const header = e.target.closest(".exercise-header");
+  if (header) {
+    openExercise(header.closest(".exercise"));
+    return;
+  }
+
+  /* Save + Next */
+  if (e.target.matches(".saveExercise")) {
+    const btn = e.target;
+    const card = btn.closest(".exercise");
+    const max = Number(card.dataset.maxSets || 4);
+  
+    // count completed sets (works even if maxSets differs)
+    const weights = [...card.querySelectorAll(".setWeight")];
+    const reps    = [...card.querySelectorAll(".setReps")];
+  
+    let count = 0;
+    for (let i = 0; i < Math.min(max, weights.length, reps.length); i++) {
+      if (weights[i]?.value && reps[i]?.value) count++;
+    }
+  
+    // update local UI
+    card.querySelector(".status").textContent = `${count} / ${max}`;
+  
+    // build and POST payload to Google Sheets
+    try {
+      btn.disabled = true;
+      btn.textContent = "Saving...";
+  
+      const payload = buildPayload(card);
+      await saveExerciseToSheet(payload);
+  
+      btn.textContent = "Saved ✓ Next →";
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = "Save & Next →";
+        goNext(card);
+      }, 200);
+  
+    } catch (err) {
+      console.error("Save failed:", err);
+      btn.disabled = false;
+      btn.textContent = "Save & Next →";
+      alert("Save failed. Open DevTools Console for details.");
+    }
+  }
+});
+
+function updateTicker(card) {
+  const max = Number(card.dataset.maxSets || 4);
+  const weights = Array.from(card.querySelectorAll(".setWeight"));
+  const reps = Array.from(card.querySelectorAll(".setReps"));
+
+  let count = 0;
+  for (let i = 0; i < Math.min(max, weights.length, reps.length); i++) {
+    if (weights[i].value.trim() && reps[i].value.trim()) count++;
+  }
+  card.querySelector(".status").textContent = `${count} / ${max}`;
+}
+</script>
+</body></html>
