@@ -107,11 +107,11 @@
   <script>
     function startToday() {
       const day = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase();
-      window.location.href = `workout.html#${day}`;
+      window.location.href = `${day}.html`;
     }
 
     function goToDay(day) {
-      window.location.href = `workout.html#${day}`;
+      window.location.href = `${day}.html`;
     }
 
     document.addEventListener('click',async(e) =>){
