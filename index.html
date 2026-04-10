@@ -61,6 +61,10 @@
       border-radius: 12px;
       color: #fff;
     }
+
+    .hidden{
+      display: none;
+    }
   </style>
 </head>
 <body>
@@ -105,6 +109,10 @@
 
     function goToDay(day) {
       window.location.href = `workout.html#${day}`;
+    }
+
+    document.addEventListener('click',async(e) =>){
+      const clickedItem = e.target.classList.remove('hidden')
     }
   </script>
 </body>
