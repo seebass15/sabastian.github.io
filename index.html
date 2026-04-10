@@ -147,6 +147,7 @@
     function startToday() {
       const day = new Date()
         .toLocaleDateString("en-US", { weekday: "long" })
+        .toUpperCase()
       window.location.href = `${day}.html`;
     }
 
