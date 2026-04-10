@@ -21,6 +21,14 @@
       margin-bottom: 16px;
     }
 
+    .menu-btn {
+      font-size: 1.4rem;
+      background: none;
+      border: none;
+      color: #eaf0ff;
+      cursor: pointer;
+    }
+
     .card {
       background: rgba(255,255,255,.06);
       border-radius: 16px;
@@ -50,39 +58,80 @@
       background: #7c5cff;
       color: #fff;
       margin-bottom: 16px;
+      cursor: pointer;
     }
 
-    .day-picker button {
+    /* Menu */
+    .menu {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100%;
+      background: #11162a;
+      padding: 16px;
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      z-index: 1000;
+    }
+
+    .menu.open {
+      transform: translateX(0);
+    }
+
+    .menu h3 {
+      margin-top: 0;
+    }
+
+    .menu button {
       width: 100%;
       padding: 10px;
       margin-bottom: 8px;
-      background: rgba(255,255,255,.08);
+      border-radius: 10px;
       border: none;
-      border-radius: 12px;
+      background: rgba(255,255,255,.08);
       color: #fff;
+      cursor: pointer;
     }
 
-    .hidden{
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.4);
       display: none;
+      z-index: 999;
+    }
+
+    .overlay.show {
+      display: block;
     }
   </style>
 </head>
+
 <body>
+
+  <!-- Slide-out menu -->
+  <div id="menu" class="menu">
+    <h3>Start Workout</h3>
+    <button onclick="goToDay('monday')">Monday</button>
+    <button onclick="goToDay('tuesday')">Tuesday</button>
+    <button onclick="goToDay('wednesday')">Wednesday</button>
+    <button onclick="goToDay('thursday')">Thursday</button>
+    <button onclick="goToDay('friday')">Friday</button>
+  </div>
+
+  <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
 
   <!-- Header -->
   <div class="header">
-    <div>
-    <button hidden>☰</button>
-    <a href = "monday.html">Monday</a>
-    </div>
-    <b>Workout hhhhLog</b>
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <b>Workout Log</b>
     <span></span>
   </div>
 
   <!-- Weekly Progress -->
   <div class="card">
-    <b>Week 3 Progress</b>
-
+    <b>Overall Progress</b>
     <div class="progress-grid">
       <div class="metric">Avg Weight: 210 → 208</div>
       <div class="metric">Cardio: 120 / 150</div>
@@ -94,19 +143,11 @@
   <!-- Primary Action -->
   <button class="primary-btn" onclick="startToday()">Start Today’s Workout</button>
 
-  <!-- Day Picker -->
-  <div class="card day-picker">
-    <b>Start Another Day</b>
-    <button onclick="goToDay('monday')">Monday</button>
-    <button onclick="goToDay('tuesday')">Tuesday</button>
-    <button onclick="goToDay('wednesday')">Wednesday</button>
-    <button onclick="goToDay('thursday')">Thursday</button>
-    <button onclick="goToDay('friday')">Friday</button>
-  </div>
-
   <script>
     function startToday() {
-      const day = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase();
+      const day = new Date()
+        .toLocaleDateString("en-US", { weekday: "long" })
+        .toLowerCase();
       window.location.href = `${day}.html`;
     }
 
@@ -114,10 +155,11 @@
       window.location.href = `${day}.html`;
     }
 
-    document.addEventListener('click',async(e) =>){
-      const clickedItem = e.target.classList.remove('hidden')
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("open");
+      document.getElementById("overlay").classList.toggle("show");
     }
   </script>
+
 </body>
 </html>
-``
