@@ -221,7 +221,7 @@
       </div>
     </div>
   </div>
-``
+  
   <script>
     function startToday() {
       const day = new Date()
@@ -238,7 +238,57 @@
       document.getElementById("menu").classList.toggle("open");
       document.getElementById("overlay").classList.toggle("show");
     }
-  </script>
+
+
+
+
+
+  // === CONFIG ===
+  // Set this to your actual program start date (YYYY-MM-DD).
+  const PROGRAM_START = "2026-04-06";
+  const TOTAL_WEEKS = 14;
+
+  function parseISODateLocal(iso) {
+    // Avoid timezone edge cases by constructing a local date at midnight.
+    const [y, m, d] = iso.split("-").map(Number);
+    return new Date(y, m - 1, d);
+  }
+
+  function clamp(n, min, max) {
+    return Math.max(min, Math.min(max, n));
+  }
+
+  function formatDate(d) {
+    return d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+
+  function updateProgramRing() {
+    const start = parseISODateLocal(PROGRAM_START);
+    const today = new Date();
+    const todayLocal = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const daysElapsed = Math.floor((todayLocal - start) / msPerDay);
+    const totalDays = TOTAL_WEEKS * 7;
+
+    const pctRaw = (daysElapsed / totalDays) * 100;
+    const pct = clamp(pctRaw, 0, 100);
+
+    // Week number: week 1 starts at day 0–6
+    const week = clamp(Math.floor(daysElapsed / 7) + 1, 1, TOTAL_WEEKS);
+
+    // Compute end date for display
+    const end = new Date(start.getTime() + (totalDays * msPerDay));
+
+    // Update labels
+    document.getElementById("programPct").textContent = `${Math.round(pct)}%`;
+    document.getElementById("programWeek").textContent = `Week ${week}`;
+    document.getElementById("programSub").textContent = `Week ${week} of ${TOTAL_WEEKS}`;
+    document.getElementById("programDates").textContent = `${formatDate(start)} → ${formatDate(end)}`;
+
+    // Update ring stroke based on circumference
+    const progressCircle = document.querySelector(".ring-progress");
+    const r = 46;
 
 </body>
 </html>
