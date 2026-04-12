@@ -105,6 +105,57 @@
     .overlay.show {
       display: block;
     }
+
+    .ring {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      flex: 0 0 120px;
+    }
+    
+    .ring-svg {
+      width: 120px;
+      height: 120px;
+      transform: rotate(-90deg); /* start at top */
+    }
+    
+    .ring-track {
+      fill: none;
+      stroke: rgba(255,255,255,0.10);
+      stroke-width: 12;
+    }
+    
+    .ring-progress {
+      fill: none;
+      stroke: #7c5cff;              /* brand color */
+      stroke-width: 12;
+      stroke-linecap: round;
+      stroke-dasharray: 289;         /* set by JS too, but safe default */
+      stroke-dashoffset: 289;        /* set by JS */
+      transition: stroke-dashoffset 600ms ease;
+      filter: drop-shadow(0 8px 18px rgba(124,92,255,0.25));
+    }
+    
+    .ring-center {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      pointer-events: none;
+    }
+    
+    .ring-pct {
+      font-weight: 800;
+      font-size: 1.25rem;
+      line-height: 1.1;
+    }
+    
+    .ring-week {
+      margin-top: 2px;
+      font-size: 0.85rem;
+      opacity: 0.75;
+    }
   </style>
 </head>
 
@@ -143,6 +194,34 @@
   <!-- Primary Action -->
   <button class="primary-btn" onclick="startToday()">Start Today’s Workout</button>
 
+  <div class="card" id="programCard">
+    <div style="display:flex; align-items:center; justify-content:space-between; gap:16px;">
+      <div>
+        <b style="display:block; font-size:1.05rem;">Program Progress</b>
+        <div id="programSub" style="opacity:.75; margin-top:4px; font-size:.95rem;">
+          Week — of 14
+        </div>
+        <div id="programDates" style="opacity:.65; margin-top:6px; font-size:.85rem;">
+          <!-- populated by JS -->
+        </div>
+      </div>
+  
+      <div class="ring" aria-label="14-week progress ring">
+        <svg class="ring-svg" viewBox="0 0 120 120" role="img">
+          <!-- Track -->
+          <circle class="ring-track" cx="60" cy="60" r="46"></circle>
+          <!-- Progress -->
+          <circle class="ring-progress" cx="60" cy="60" r="46"></circle>
+        </svg>
+  
+        <div class="ring-center">
+          <div id="programPct" class="ring-pct">0%</div>
+          <div id="programWeek" class="ring-week">Week 0</div>
+        </div>
+      </div>
+    </div>
+  </div>
+``
   <script>
     function startToday() {
       const day = new Date()
